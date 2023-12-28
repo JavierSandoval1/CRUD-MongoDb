@@ -24,7 +24,7 @@ public class ConexionMongoDB {
 //            System.out.println("BASE DE DATOS CREADA");
 //               insertarUsuario(db, "personas", "Javier", "Sandoval");
 //               insertarUsuario(db, "personas", "Javier", "Rivera");
-             insertarUsuario(db, "personas", "Diego", "Ormazabal");
+             insertarUsuario(db, "personas", "Francisca", "Perez");
 
             //MOSTRAR
             
@@ -53,19 +53,19 @@ public class ConexionMongoDB {
       //INSERTAR
     public static void insertarUsuario(DB db, String coleccion, String nombre, String apellido) {
 
-        DBCollection colec = db.getCollection(coleccion);
+        DBCollection nombreColeccion = db.getCollection(coleccion);
 
         BasicDBObject documento = new BasicDBObject();
         documento.put("nombre", nombre);
         documento.put("apellido", apellido);
 
-        colec.insert(documento);
+        nombreColeccion.insert(documento);
     }
     
     public static void mostrarColeccion(DB db, String coleccion){
-        DBCollection colec = db.getCollection(coleccion);
+        DBCollection nombreColeccion = db.getCollection(coleccion);
         
-        DBCursor cursor = colec.find();
+        DBCursor cursor = nombreColeccion.find();
         
         while(cursor.hasNext()){
             System.out.println("* " + cursor.next().get("nombre") + " - " + cursor.curr().get("apellido"));
@@ -73,9 +73,9 @@ public class ConexionMongoDB {
     }
     
     public static void actualizarDocumento(DB db, String coleccion, String nombre) {
-        DBCollection colec = db.getCollection(coleccion);
+        DBCollection nombreColeccion = db.getCollection(coleccion);
         
-        // SENTENCIA CON LA INFORMACION A REEMPLAZAR
+        // SENTENCIA CON LAS INFORMACION A REEMPLAZAR
         
         BasicDBObject actualizarApellido = new BasicDBObject();  
         actualizarApellido.append("$set", new BasicDBObject().append("apellido", "Ferro"));
@@ -86,12 +86,12 @@ public class ConexionMongoDB {
         buscarPorNombre.append("nombre", nombre);
         
         //REALIZA EL UPDATE
-        colec.updateMulti(buscarPorNombre, actualizarApellido);
+        nombreColeccion.updateMulti(buscarPorNombre, actualizarApellido);
     }
     
     public static void borrarDocumento(DB db, String coleccion, String nombre){
-        DBCollection colec = db.getCollection(coleccion);
+        DBCollection nombreColeccion = db.getCollection(coleccion);
         
-        colec.remove(new BasicDBObject().append("nombre", nombre));
+        nombreColeccion.remove(new BasicDBObject().append("nombre", nombre));
     }
 }
